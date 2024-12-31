@@ -6,12 +6,14 @@ export interface CartState {
   items: TProductWithQuantity[];
   totalQuantity: number;
   totalPrice: number;
+  searched: string;
 }
 
 const initialState: CartState = {
   items: [],
   totalQuantity: 0,
   totalPrice: 0,
+  searched: "",
 };
 
 const cartSlice = createSlice({
@@ -60,6 +62,10 @@ const cartSlice = createSlice({
       }
     },
 
+    handleSearched: (state, action) => {
+      state.searched = action.payload;
+    },
+
     clearCart: (state) => {
       state.items = [];
       state.totalQuantity = 0;
@@ -68,7 +74,12 @@ const cartSlice = createSlice({
   },
 });
 
-export const { addItem, removeItem, updateQuantity, clearCart } =
-  cartSlice.actions;
+export const {
+  addItem,
+  removeItem,
+  updateQuantity,
+  clearCart,
+  handleSearched,
+} = cartSlice.actions;
 
 export default cartSlice.reducer;

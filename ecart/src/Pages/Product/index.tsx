@@ -4,6 +4,8 @@ import ProductCard from "../../components/OrderCard";
 import Spinner from "../../components/Spinner";
 import { useProducts } from "../../hooks";
 import { TProduct, TProductWithQuantity } from "../../types";
+import { useSelector } from "react-redux";
+import { RootState } from "../../features/store";
 
 /**
  * Filters products based on the active filters.
@@ -44,10 +46,13 @@ const getCategoryFilters = (products: TProduct[]) => {
     }));
 };
 
+
+
 const index = () => {
   const [activeFilters, setActiveFilters] = useState<TFilter[]>([]);
   const { data, isLoading } = useProducts();
   const products = data?.data ? data?.data : [];
+  const { searched  } = useSelector((state: RootState) => state.cart);
 
   const productsWithQuantities: TProductWithQuantity[] = useMemo(
     () => products.map((item) => ({ ...item, quantity: 0 })),

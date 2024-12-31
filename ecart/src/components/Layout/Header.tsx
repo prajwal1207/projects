@@ -1,12 +1,18 @@
 import { FaCartShopping } from "react-icons/fa6";
 import { GoHeartFill } from "react-icons/go";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { RootState } from "../../features/store";
+import { handleSearched } from "../../features/slices";
 
 const Header = () => {
+  const dispatch = useDispatch();
+
+  const handleAddToCart = (e: React.ChangeEvent<HTMLInputElement>) => {
+    dispatch(handleSearched(e.target.value));
+  };
   const navigate = useNavigate();
-  const { totalQuantity } = useSelector((state: RootState) => state.cart);
+  const { totalQuantity  } = useSelector((state: RootState) => state.cart);
   return (
     <header className="flex items-center justify-between p-5 bg-gray-800 text-white">
       <div className="text-xl font-bold"></div>
@@ -15,6 +21,7 @@ const Header = () => {
           type="text"
           placeholder="Search for products..."
           className="w-full bg-transparent outline-none text-white"
+          onChange={handleAddToCart}
         />
         <button className="text-gray-400 hover:text-white">🔍</button>
       </div>
